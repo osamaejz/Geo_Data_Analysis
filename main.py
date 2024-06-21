@@ -1,14 +1,14 @@
-from GDA import Geo_Data_Analytics
+from Geo_Data_Analysis.GDA import Geo_Data_Analytics
 
 analysis = Geo_Data_Analytics()
 
-input_data_directory = '2009' ## Directory where the raw values are placed
+input_data_directory = 'D:/NCAI-Neurocomputation Lab/Muneeza_Suparco/2009' ## Directory where the raw values are placed
 station_name = 'Abg09' # station from where the data was acquired
-year = str(2010) ## Year of the data to be processed
+year = str(2009) ## Year of the data to be processed
 margin_value = 120 ## difference of data points that need to be stagged from the end of yesterday to the begining of today
-moving_avg_time = 60 # should be in minutes
-highlight_begin = 10.5 # for highlights in line plot. 10.5 means 10:30 AM
-highlight_end = 13.5 # for highlights in line plot. 13.5 means 13:30 PM
+moving_avg_time = 60 ## should be in minutes
+highlights = [10.5, 13.5, 19.5, 21.5] ## for highlights in line plot. its input time stamps must be even in length. every two values represent start and end time of each highlight
+
 mmdd_path = "D:/NCAI-Neurocomputation Lab/Muneeza_Suparco/mmdd2009.csv" ## list of quiet days
 
 ##converting .min files into xlsx
@@ -24,4 +24,4 @@ analysis.QD_filtration(station_name, year, mmdd_path)
 analysis.process(station_name, year, moving_avg_time)
 
 ##visualizing outputs 
-analysis.visualization(station_name, year, moving_avg_time, highlight_begin, highlight_end)
+analysis.visualization(station_name, year, moving_avg_time, highlights)

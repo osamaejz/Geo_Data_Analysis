@@ -17,7 +17,7 @@ class Geo_Data_Analytics:
         
         min_files = [f for f in os.listdir(input_directory) if f.endswith('.min')]
         
-        xls_save_path = f"Output/{station_name}/{year}/xls_files"
+        xls_save_path = f"Output/{station_name}/{year}/xls_raw_files"
         
         if not os.path.exists(xls_save_path):
             os.makedirs(xls_save_path)
@@ -40,7 +40,7 @@ class Geo_Data_Analytics:
         
         # Input and Output Directories
         LST_save_path = f'Output/{station_name}/{year}/xls_LST_files' 
-        xls_files_path = f'Output/{station_name}/{year}/xls_files' 
+        xls_files_path = f'Output/{station_name}/{year}/xls_raw_files' 
         
         # Create output directory if it doesn't exist
         if not os.path.exists(LST_save_path):
@@ -108,7 +108,7 @@ class Geo_Data_Analytics:
         #LST_files_path = f'Output/{station_name}/{year}/xls_LST_files' 
         QD_files_path = f'Output/{station_name}/{year}/QD_files'
         
-        SqH_save_path = f'Output/{station_name}/{year}/QD'
+        SqH_save_path = f'Output/{station_name}/{year}/SqH'
         
         prompt = f"SqH{moving_mins_time}_{station_name}.xlsx"
         
@@ -182,13 +182,13 @@ class Geo_Data_Analytics:
         
         
     ## Function for outputs visualization   
-    def visualization (self, station_name, year, moving_avg_time, highlight_begin, highlight_end):
+    def visualization (self, station_name, year, moving_avg_time, highlights):
             
         #LST_files_path = f'Output/{station_name}/{year}/xls_LST_files' 
         QD_files_path = f'Output/{station_name}/{year}/QD_files'
         data_files = [f for f in os.listdir(QD_files_path) if f.endswith('.xlsx')]
         
-        SqH_file_path = f'Output/{station_name}/{year}/QD/SqH{moving_avg_time}_{station_name}.xlsx'
+        SqH_file_path = f'Output/{station_name}/{year}/SqH/SqH{moving_avg_time}_{station_name}.xlsx'
         SqH = np.array(pd.read_excel(SqH_file_path, index_col=0))
         
         output_dir = f'Output/{station_name}/{year}/plots'
@@ -231,16 +231,25 @@ class Geo_Data_Analytics:
         
             plt.legend(loc='best', fontsize=14)
             
-            ax.axvspan(highlight_begin, highlight_end, color="blue", alpha=0.3)
+            # ax.axvspan(highlight_begin, highlight_end, color="blue", alpha=0.3)
+            
+            # if highlight_begin_2 is not None and highlight_end_2 is not None:
+            
+            #     ax.axvspan(highlight_begin_2, highlight_end_2, color="blue", alpha=0.3)
+                
+            a = 0   
+            for j in range (int(len(highlights) / 2)):
+                ax.axvspan(highlights[j+a], highlights[j+1+a], color= 'blue', alpha=0.3)    
+                a += 1
             
             plt.grid(True, which='both')
             plt.title(f'{station_name} {out[ii]}', fontsize=20)
         
-            plt.show()    
-        
+                   
             # Save the plot
             print(f"Saving figure {station_name} {out[ii]}")
             plt.savefig(os.path.join(output_dir, f'plot_{ii+1}.png'))
+            plt.show()    
             plt.close()
         
         print("Plots saved successfully.")
