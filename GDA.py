@@ -197,8 +197,8 @@ class Geo_Data_Analytics:
         os.makedirs(output_dir, exist_ok=True)
         
         # Width and height in inches
-        width = 8
-        height = 6
+        width = 12
+        height = 10
         lw = 2  # Line width
         msz = 8  # Marker size  
         
@@ -222,9 +222,11 @@ class Geo_Data_Analytics:
             y_new = cs(x_new)    
             
             ax.plot(x_new, y_new, 'b-o', linewidth=3, markersize=3, label=f'Actual SqH: {moving_avg_time} mins mvg avg on LST')
-        
-            plt.xlim([0, 25])
-            plt.xticks(np.arange(0, 26, 2), fontsize=18)
+                   
+            plt.xlim([0, 24])
+            time_labels = [f"{str(hour).zfill(2)}:00" for hour in range(0,24,2)]
+            plt.xticks(np.arange(0, 24, 2), time_labels, fontsize=18, rotation=45)  # Rotate for better readability
+
             plt.ylim([-35, 65])
             plt.yticks(np.arange(-35, 66, 5), fontsize=18)
         
@@ -232,12 +234,6 @@ class Geo_Data_Analytics:
             plt.ylabel('Sq(H) [nT]', fontsize=18)
         
             plt.legend(loc='best', fontsize=14)
-            
-            # ax.axvspan(highlight_begin, highlight_end, color="blue", alpha=0.3)
-            
-            # if highlight_begin_2 is not None and highlight_end_2 is not None:
-            
-            #     ax.axvspan(highlight_begin_2, highlight_end_2, color="blue", alpha=0.3)
                 
             a = 0   
             for j in range (int(len(highlights) / 2)):
@@ -247,7 +243,6 @@ class Geo_Data_Analytics:
             plt.grid(True, which='both')
             plt.title(f'{station_name} {out[ii]}', fontsize=20)
         
-                   
             # Save the plot
             print(f"Saving figure {station_name} {out[ii]}")
             plt.savefig(os.path.join(output_dir, f'plot_{ii+1}.png'))

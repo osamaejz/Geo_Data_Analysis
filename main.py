@@ -5,7 +5,7 @@ analysis = Geo_Data_Analytics()
 input_data_directory = 'D:/NCAI-Neurocomputation Lab/Muneeza_Suparco/2009' ## Directory where the raw values are placed
 station_name = 'Abg09' # station from where the data was acquired
 year = str(2009) ## Year of the data to be processed
-margin_value = 120 ## difference of data points that need to be stagged from the end of yesterday to the begining of today
+margin_value = 292 ## difference of data points that need to be stagged from the end of yesterday to the begining of today
 moving_avg_time = 60 ## should be in minutes
 highlights = [10.5, 13.5, 19.5, 21.5] ## for highlights in line plot. its input time stamps must be even in length. every two values represent start and end time of each highlight
 
