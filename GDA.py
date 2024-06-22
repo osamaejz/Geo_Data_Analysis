@@ -62,7 +62,7 @@ class Geo_Data_Analytics:
         
             print (f"Generating merged file for {xls_files[i]} and {xls_files[i+1]} ...")
             # Output File Writing
-            save_file = f"{os.path.splitext(xls_files[i])[0]}_combined.xlsx"
+            save_file = f"{os.path.splitext(xls_files[i+1])[0]}_combined.xlsx"
             out = os.path.join(LST_save_path, save_file)
             merged_data.to_excel(out, index=False)
 
@@ -155,6 +155,8 @@ class Geo_Data_Analytics:
             
             # Ensure that the dimensions are compatible and assign to Hem
             Hem[j - 1, :] = tmpHem.iloc[0, :]
+            
+        Hem = np.nan_to_num(Hem, nan=np.nanmean(Hem, axis = 0))
         
         print("Computing Heavg....")       
         Heavg = np.zeros((1, Hem.shape[1]))
@@ -214,7 +216,7 @@ class Geo_Data_Analytics:
             #plt.plot(Hrs, SqH[:, ii], 'b-o', linewidth=4, markersize=4, label=f'Actual SqH: {moving_avg_time} mins mvg avg on LST')
         
             cs = CubicSpline(Hrs, SqH[:, ii])
-            
+
             # Create a range of x values for plotting the spline
             x_new = np.linspace(min(Hrs), max(Hrs), 1000)
             y_new = cs(x_new)    

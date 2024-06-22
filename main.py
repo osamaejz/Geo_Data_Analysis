@@ -1,4 +1,4 @@
-from Geo_Data_Analysis.GDA import Geo_Data_Analytics
+from GDA import Geo_Data_Analytics
 
 analysis = Geo_Data_Analytics()
 
